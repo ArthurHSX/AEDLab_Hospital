@@ -10,16 +10,22 @@ namespace Hospital
     {
         //Estado é definido entre 1 e 4, sendo 4 o mais grave CTI
         private int estado;
-        private string nome;
+        //private string nome;
 
+
+        //public Paciente(int i)
+        //{
+        //    this.estado = i;
+        //}
         public Paciente()
         {
-            this.estado = -1;
-        }
+            Random rnd = new Random();
+            this.estado = rnd.Next(1, 4);
+        }        
         public Paciente(Paciente paciente)
         {
             this.estado = paciente.estado;
-            this.nome = paciente.nome;
+            //this.nome = paciente.nome;
         }
 
         /// <summary>
@@ -31,13 +37,13 @@ namespace Hospital
             return this.estado;
         }
 
-        /// <summary>
-        /// Retorna o nome do paciente
-        /// </summary>
-        /// <returns></returns>
-        public string GetNome()
-        {
-            return this.nome;
-        }
+        ///// <summary>
+        ///// Retorna o nome do paciente
+        ///// </summary>
+        ///// <returns></returns>
+        //public string GetNome()
+        //{
+        //    return this.nome;
+        //}
     }
 }

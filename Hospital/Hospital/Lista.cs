@@ -58,7 +58,7 @@ namespace Hospital
                 this.ultimo.Proximo = elemento;
                 this.ultimo = elemento;
             }
-            count++;
+            this.count++;
         }
 
         /// <summary>
@@ -109,21 +109,30 @@ namespace Hospital
         /// <returns></returns>
         public Paciente RetiraPPrioridade(int i)
         {
-            Elemento percorre = new Elemento(primeiro.Proximo);
+            if (this.Vazia()) return null;
+
+            Elemento percorre = this.primeiro;
             Elemento aux = null;
 
-            while (percorre != null)
+            while (percorre.Proximo != null)
             {
                 if (percorre.Proximo.Dado().GetEstado() == i)
                 {
                     aux = percorre.Proximo;
-                }
-                
+                    break;
+                }                
                 percorre = percorre.Proximo;
             }
-            aux.Proximo.Proximo = aux.Proximo.Proximo.Proximo;
-
-            return aux.Proximo.Dado();
+            if (percorre.Proximo == this.ultimo)
+            {
+                this.ultimo = this.primeiro; percorre.Proximo = aux.Proximo;
+            }
+            else
+            {
+                percorre.Proximo = aux.Proximo;
+            }
+            this.count--;
+            return aux.Dado();
         }
 
         /// <summary>
@@ -132,9 +141,11 @@ namespace Hospital
         /// <param name="busca"></param>
         /// <returns></returns>
         public bool Busca(int busca, Elemento aux)
-        {            
+        {
+            if (aux == null)
+                return false;
             if (aux.Dado().GetEstado() == busca)
-                return true;
+                return true;            
             else
                 return Busca(busca, aux.Proximo);
         }

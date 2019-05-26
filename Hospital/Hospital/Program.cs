@@ -15,21 +15,22 @@ namespace Hospital
         {
             int contLeito = 0, contEnf = 0, contUT = 0, contCT = 0, rnd = 0;
             Random random = new Random();
-            Paciente p = new Paciente(); lista.Inserir(p);
+            Paciente p;
 
             while (lista.Primeiro != null)
             {
-                InterfaceHospital();
-                rnd = random.Next(0, 3);
-                for (int i = 0; i < rnd; i++)
+                InterfaceHospital();                
+                rnd = random.Next(0, 3);                
+                if ((lista.Count() + rnd) <= 15)
                 {
-                    if ((lista.count + rnd) <= 15)
+                    for (int i = 0; i < rnd; i++)
                     {
-                        p = new Paciente(); lista.Inserir(p);
+                        p = new Paciente(); lista.Inserir(p);                        
                     }
-                }
-                System.Threading.Thread.Sleep(800);
+                }                
                 InterfaceHospital();
+                System.Threading.Thread.Sleep(1000);
+
                 if (cti == false || contCT == 5)
                 {
                     if (contCT == 5)
@@ -56,9 +57,9 @@ namespace Hospital
                 }
                 if (enfermaria == false || contEnf == 2)
                 {
-                    if (contEnf == 3)
+                    if (contEnf == 2)
                     {
-                        uti = false; contEnf = 0;
+                        enfermaria = false; contEnf = 0;
                     }
                     if (lista.Busca(2, lista.Primeiro.Proximo))
                     {
@@ -68,7 +69,7 @@ namespace Hospital
                 }
                 if (leito == false || contLeito == 1)
                 {
-                    if (contLeito == 2)
+                    if (contLeito == 1)
                     {
                         leito = false; contLeito = 0;
                     }
@@ -76,10 +77,12 @@ namespace Hospital
                     {
                         lista.RetiraPPrioridade(1); leito = true;
                     }
-                }
-                System.Threading.Thread.Sleep(800);
+                }               
+                
                 InterfaceHospital();
-                if(cti == true)
+                System.Threading.Thread.Sleep(1000);
+
+                if (cti == true)
                     contCT++;
                 if (uti == true)
                     contUT++;
@@ -109,7 +112,7 @@ namespace Hospital
                               "Número de pacientes em espera: {0}                \n" +
                               "                                                 \n" +
                               "Leito: {1}\n\nEnfermaria: {2}\n\nUTI: {3}\n\nCTI: {4}  ",
-                              lista.count, texto1, texto2, texto3, texto4);
+                              lista.Count(), texto1, texto2, texto3, texto4);
         }
     }
 }

@@ -10,13 +10,11 @@ namespace Hospital
     {
         private Elemento primeiro;      // primeiro é o sentinela.
         private Elemento ultimo;
-        public int count;
 
         public Lista()
         {
             this.primeiro = new Elemento();
             this.ultimo = primeiro;
-            count = 0;
         }
 
         public Elemento Primeiro { get => primeiro; set => primeiro = value; }
@@ -56,9 +54,8 @@ namespace Hospital
             else
             {
                 this.ultimo.Proximo = elemento;
-                this.ultimo = elemento;
+                this.ultimo = this.ultimo.Proximo;
             }
-            this.count++;
         }
 
         /// <summary>
@@ -74,33 +71,7 @@ namespace Hospital
                 return aux.Dado();
             }
             return null;
-        }               
-
-        /// <summary>
-        /// Retira o maior prioritário da lista
-        /// </summary>
-        /// <returns></returns>
-        public Paciente RetiraMaiorPrioritario()
-        {
-            Elemento percorre = new Elemento(primeiro.Proximo);
-            Elemento aux = null;
-
-            while (percorre.Proximo != null)
-            {
-                if (percorre.Proximo.Dado().GetEstado() == 1 && aux == null)
-                {
-                    aux = percorre;
-                }
-                else if (percorre.Proximo.Dado().GetEstado() > aux.Dado().GetEstado())
-                {
-                    aux = percorre;
-                }                
-                percorre = percorre.Proximo;
-            }
-            aux.Proximo.Proximo = aux.Proximo.Proximo.Proximo;
-
-            return aux.Proximo.Dado();
-        }
+        }                       
 
         /// <summary>
         /// Retira baseado no estado do paciente fornecido como parâmetro
@@ -131,7 +102,6 @@ namespace Hospital
             {
                 percorre.Proximo = aux.Proximo;
             }
-            this.count--;
             return aux.Dado();
         }
 
@@ -148,6 +118,20 @@ namespace Hospital
                 return true;            
             else
                 return Busca(busca, aux.Proximo);
+        }
+
+        public int Count()
+        {
+            if (this.Vazia()) return 0;
+            int cont = 0;
+            Elemento percorre = this.primeiro;
+
+            while (percorre.Proximo != null)
+            {
+                cont = cont + 1;
+                percorre = percorre.Proximo;
+            }
+            return cont;
         }
 
         /// <summary>
